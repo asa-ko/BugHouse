@@ -13,6 +13,8 @@ class TaskAdapter(
 ) : RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
     val items: MutableList<Task> = mutableListOf()
 
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_task_cell, parent, false)
         return ViewHolder(view)
@@ -24,15 +26,26 @@ class TaskAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        holder.container.setOnClickListener {
+       /* holder.container.setOnClickListener {
             itemClickListener.onItemClick(position)
         }
+
+        */
+        holder.container.setOnClickListener {
+            itemClickListener.onItemClick(item)
+        }
         holder.nameTextView.text = item.name
+
 
     }
 
     fun addAll(items: List<Task>) {
         this.items.addAll(items)
+        notifyDataSetChanged()
+    }
+
+    fun addItem(items:Task){
+        this.items.add(items)
         notifyDataSetChanged()
     }
 
@@ -42,6 +55,9 @@ class TaskAdapter(
     }
 
     interface ItemClickListener {
-        fun onItemClick(position: Int)
+        //fun onItemClick(position: Int)
+        fun onItemClick(task: Task)
     }
+
+
 }
